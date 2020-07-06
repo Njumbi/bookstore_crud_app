@@ -10,6 +10,7 @@ const multer = require('multer');
 //import routes
 const sequelize = require('./utilities/database')
 
+
 // app 
 const app = express()
 
@@ -30,9 +31,11 @@ app.use(session({
 }));
 
 //listen to port
-sequelize.sync()
+sequelize.sync({
+        force: false
+    })
     .then(() => {
-        app.listen(8080, () => {
+        app.listen(6000, () => {
             console.log('app started')
 
         });
