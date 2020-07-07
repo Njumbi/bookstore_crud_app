@@ -7,7 +7,9 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const multer = require('multer');
 
+// imports
 const sequelize = require('./utilities/database')
+const bookRoutes = require('./routes/books')
 // create server
 const app = express()
 
@@ -49,12 +51,12 @@ app.use(session({
 }));
 
 //use routes
-
+app.use(bookRoutes)
 
 //listen to server
 sequelize.sync()
     .then(() => {
-        app.listen(3000, () => {
+        app.listen(4000, () => {
             console.log('app started')
 
         });
