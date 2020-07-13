@@ -6,6 +6,7 @@ const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const multer = require('multer');
+const fs = require('fs');
 
 // imports
 const sequelize = require('./utilities/database')
@@ -36,7 +37,8 @@ app.use(bodyParser.urlencoded({
 app.use(multer({
     storage: fileStorage,
     fileFilter: fileFilter
-}).single('image'));
+}).single("image"));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -56,7 +58,7 @@ app.use(bookRoutes)
 //listen to server
 sequelize.sync()
     .then(() => {
-        app.listen(4000, () => {
+        app.listen(8080, () => {
             console.log('app started')
 
         });

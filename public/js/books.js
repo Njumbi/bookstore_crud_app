@@ -1,6 +1,6 @@
 $(document).ready(function () {
     getBook()
-
+    addBook()
 });
 
 const getBook = () => {
@@ -60,18 +60,49 @@ const getBook = () => {
     })
 }
 
-const AddBook = () => {
+const addBook = () => {
     $('#add_book').submit(e => {
         e.preventDefault()
         swal({
             title: "Add Book",
             text: "This book will be added to the system",
             type: "warning",
-            showCancelButton: true,
+            showCancelButdton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Continue",
             closeOnConfirm: false,
             showLoaderOnConfirm: true,
-        }, () => {})
+        }, () => {
+            const bookImage = $('#b_img').get(0).files;
+            const bookName = $('#b_name').val();
+            const bookType = $('#b_type').val();
+            const bookPrice = $('#b_price').val();
+            const bookDescription = $('#desc').val();
+
+            const formData = new FormData();
+            formData.append("image", bookImage[0]);
+            formData.append("name", bookName)
+            formData.append("type", bookType);
+            formData.append("price", bookPrice);
+            formData.append("desc", bookDescription);
+
+            $.ajax({
+                type: "POST",
+                url: '/book/add',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (data) => {
+                    if (data.status === true) {
+                        swal("Success", data.message, "success")
+                        $("#book_table").DataTable().ajax.reload(null, false);
+                        $('#addBook').modal('hide');
+                        $('#add_book')[0].reset();
+                    } else {
+                        swal("Error", data.message, "error")
+                    }
+                }
+            })
+        })
     })
 }

@@ -20,33 +20,33 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form id="add_book" method="POST" action="/upload" enctype="multipart/form-data">
+                    <form id="add_book" method="POST" action="" enctype="multipart/form-data">
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect2">Image</label>
-                                <input type="file" accept="image/*" name="photo" id="b_img" required>
+                                <input type="file" accept="image/*" id="b_img" required>
                             </div>
                             <div class="form-group">
-                                <label for="type" class="col-form-label">Name of Pizza</label>
-                                <input type="text" class="form-control" id="b_name">
+                                <label for="type" class="col-form-label">Name</label>
+                                <input type="text" class="form-control" id="b_name" required>
                             </div>
                             <div class="form-group">
                                 <label for="size" class="col-form-label">Type</label>
-                                <input type="text" class="form-control" id="b_type">
+                                <input type="text" class="form-control" id="b_type" required>
                             </div>
                             <div class="form-group">
                                 <label for="price" class="col-form-label">Price</label>
-                                <input type="number" class="form-control" id="b_price">
+                                <input type="number" class="form-control" id="b_price" required>
                             </div>
                             <div class="form-group">
                                 <label for="description" class="col-form-label">Description</label>
-                                <textarea class="form-control" id="desc"></textarea>
+                                <textarea class="form-control" id="desc" required></textarea>
                             </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -63,8 +63,9 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form id="edit_book" method="POST" action="/upload" enctype="multipart/form-data">
+                    <form id="edit_book" method="POST" action="/upload" enctype="multipart/form-data">
+                        <div class="modal-body">
+
                             <div class="form-group">
                                 <img id="book_image" style='height:150px;width:150px;' />
                             </div>
@@ -88,11 +89,11 @@
                                 <label for="description" class="col-form-label">Description</label>
                                 <textarea class="form-control" id="edit_desc"></textarea>
                             </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
                     </form>
                 </div>
             </div>

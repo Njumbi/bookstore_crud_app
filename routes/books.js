@@ -8,5 +8,7 @@ route.get('/book', bookController.getBookPage)
 
 route.get('/book/data', bookController.getBookData)
 
+route.post('/book/add', bookController.postAddBook)
+
 
 module.exports = route;

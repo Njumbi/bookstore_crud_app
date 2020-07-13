@@ -17,10 +17,6 @@ const Book = sequelize.define('Books', {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    image: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
     type: {
         type: Sequelize.STRING,
         allowNull: false,
