@@ -17,7 +17,7 @@ const getBook = () => {
                 "defaultContent": "",
                 "title": "image",
                 'render': function (data, type, full, meta) {
-                    return "<img src= " + data + " style='height:50px;width:50px;'/>"
+                    return "<img src= " + data + " style='height:80px;width:100px;'/>"
                 }
             },
             {
@@ -57,6 +57,113 @@ const getBook = () => {
             },
 
         ]
+    })
+
+    //edit a select row
+    $('#book_table').on('click', 'button#edit', function () {
+        var data = table.row($(this).parents('tr')[0]).data();
+        //display details
+        $('#editBookModal').modal('show');
+
+        //populate values
+        $('#book_image').attr('src', data.image)
+        $('#edit_b_name').val(data.name)
+        $('#edit_b_type').val(data.type);
+        $('#edit_b_price').val(data.price);
+        $('#edit_desc').val(data.description);
+
+        //prevent default submission
+        $('#edit_book').submit(e => {
+            e.preventDefault()
+
+            //get values from your edit modal form
+
+            const editBImage = $('#edit_b_img').get(0).files;
+            const editBName = $('#edit_b_name').val();
+            const editBType = $('#edit_b_type').val();
+            const editBPrice = $('#edit_b_price').val();
+            const editBDesc = $('#edit_desc').val();
+
+            // check for any change
+            if (data.name == editBName && data.type == editBType && data.price == editBPrice && data.description == editBDesc && editBImage[0] == null) {
+                swal('No  change', 'No need to update book', 'error')
+                return
+            }
+            swal({
+                title: "Edit Book",
+                text: "This book details will be changed",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Continue",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+
+            }, () => {
+                //set new keys from html form values
+                const formData = new FormData()
+                formData.append("image", editBImage[0])
+                formData.append("name", editBName)
+                formData.append("type", editBType)
+                formData.append("price", editBPrice)
+                formData.append("desc", editBDesc)
+                formData.append("id", data.id)
+
+                // send request to controller
+                $.ajax({
+                    type: "PUT",
+                    url: '/book/edit',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.status == true) {
+                            swal("Success", data.message, "success")
+                            $("#book_table").DataTable().ajax.reload(null, false);
+                            $('#editBookModal').modal('hide');
+                        } else {
+                            swal("Error", data.message, "error")
+                        }
+                    }
+
+                })
+
+            })
+
+        })
+    })
+
+
+
+    //select the row to be deleted
+    $('#book_table').on('click', 'button#delete', function () {
+        var data = table.row($(this).parents('tr')[0]).data();
+
+        //delete the book
+        swal({
+            title: "Delete Book",
+            text: "This book will be deleted from the system",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Continue",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+        }, () => {
+            //make request to controller
+            $.get('/book/delete?id=' + data.id + '&image=' + data.image, function (data, status) {
+                if (data.status == true) {
+                    swal("success", data.message, "success")
+                    $('#book_table').DataTable().ajax.reload(null, false)
+
+                } else {
+                    swal("Error", data.message, "error")
+
+                }
+
+            })
+
+        })
     })
 }
 
