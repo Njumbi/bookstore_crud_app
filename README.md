@@ -7,7 +7,7 @@ Njumbi
 # Languages
 Javascript, jquery and html
 # Frameworks
-Node Js
+Express framework
 # License
 MIT
 # Copyrights
