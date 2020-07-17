@@ -42,7 +42,7 @@ exports.postRegistrationPage = (req, res, next) => {
                     })
                     newUser.save()
                         .then(() => {
-                            res.redirect('/')
+                            res.redirect('/login')
                         })
                         .catch(error => {
                             console.log(error)
@@ -68,9 +68,37 @@ exports.postRegistrationPage = (req, res, next) => {
 
 }
 
-exports.getLoginPage=(req,res,next)=>{
-    res.render('login.ejs',{
-        errorMessage:"",
-        successMessage:""
+exports.getLoginPage = (req, res, next) => {
+    res.render('login.ejs', {
+        errorMessage: "",
+        successMessage: ""
     })
+}
+
+exports.postLoginPage = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.pass
+    //check if user with that email exists
+    User.findOne({
+            where: {
+                email: email
+            }
+        })
+        .then(user => {
+            if (user) {
+                bcrypt.compare(password, user.password, (err, result) => {
+                    if (err) {
+                        res.render('login.ejs', {
+                            errorMessage: "wrong credentials",
+                            successMessage: ""
+                        })
+                    } else {
+                        res.redirect('/book')
+                    }
+                })
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
