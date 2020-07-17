@@ -7,6 +7,8 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
+const csurf = require('csurf');
+
 
 // imports
 const sequelize = require('./utilities/database')
@@ -14,6 +16,7 @@ const bookRoutes = require('./routes/books')
 const userRoutes = require('./routes/users')
 // create server
 const app = express()
+const csurfProtection = csurf();
 
 //set up
 const fileStorage = multer.diskStorage({
@@ -52,6 +55,15 @@ app.use(session({
     resave: false, // we support the touch method so per the express-session docs this should be set to false
     proxy: true // if you do SSL outside of node.
 }));
+app.use((req, res, next) => {
+    csurfProtection(req, res, next)
+})
+
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken()
+    res.locals.user = req.session.user
+    next()
+})
 
 //use routes
 app.use(bookRoutes)
