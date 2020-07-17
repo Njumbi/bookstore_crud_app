@@ -102,3 +102,9 @@ exports.postLoginPage = (req, res, next) => {
             console.log(error)
         })
 }
+exports.getLogOutPage = (req, res, next) => {
+    res.render('login.ejs', {
+        errorMessage: "",
+        successMessage: ""
+    })
+}
