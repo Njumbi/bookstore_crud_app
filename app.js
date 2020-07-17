@@ -11,6 +11,7 @@ const fs = require('fs');
 // imports
 const sequelize = require('./utilities/database')
 const bookRoutes = require('./routes/books')
+const userRoutes = require('./routes/users')
 // create server
 const app = express()
 
@@ -54,6 +55,7 @@ app.use(session({
 
 //use routes
 app.use(bookRoutes)
+app.use(userRoutes)
 
 //listen to server
 sequelize.sync()
