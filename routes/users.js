@@ -6,6 +6,10 @@ const userController = require('../controllers/users')
 
 route.get('/', userController.getRegistrationPage);
 
-route.get('/', userController.postRegistrationPage)
+route.post('/', userController.postRegistrationPage);
+
+route.get('/login', userController.getLoginPage);
+
+route.post('/login', userController.postLoginPage)
 
 module.exports = route;
