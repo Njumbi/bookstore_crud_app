@@ -72,7 +72,7 @@ app.use(userRoutes)
 //listen to server
 sequelize.sync()
     .then(() => {
-        app.listen(8000, () => {
+        app.listen(5000, () => {
             console.log('app started')
 
         });

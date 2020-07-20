@@ -93,7 +93,16 @@ exports.postLoginPage = (req, res, next) => {
                             successMessage: ""
                         })
                     } else {
-                        res.redirect('/book')
+
+                        req.session.loggedIn = true;
+
+                        req.session.user = user;
+
+
+                        req.session.save(error => {
+                            res.redirect('/book')
+                        })
+
                     }
                 })
             }
@@ -102,7 +111,7 @@ exports.postLoginPage = (req, res, next) => {
             console.log(error)
         })
 }
-exports.getLogOutPage = (req, res, next) => {
+exports.postLogOutPage = (req, res, next) => {
     res.render('login.ejs', {
         errorMessage: "",
         successMessage: ""
